@@ -1,0 +1,12 @@
+#version: '3.8'
+#
+#services:
+#  rufinachy_python:
+#    build: .
+#    ports:
+#      - "8081:5000"
+#    networks:
+#      - rufinachy_net
+#
+#networks:
+#  rufinachy_net:

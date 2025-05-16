@@ -1,0 +1,31 @@
+services:
+  rufinachy_db:
+    image: postgres:17.2-alpine
+    restart: always
+    ports:
+      - "5056:5432"
+    environment:
+      POSTGRES_USER: rufina
+      POSTGRES_PASSWORD: infra3
+      POSTGRES_DB: springdb
+    networks:
+      - rufina_java_postgres_network
+
+  rufinachy_backend:
+    build: ./javaApp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rufinachy_db
+    networks:
+      - rufina_java_postgres_network
+
+  rufinachy_python:
+    build: ./pythonApp
+    ports:
+      - "8081:5000"
+
+
+networks:
+  rufina_java_postgres_network:
+
