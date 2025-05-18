@@ -1,4 +1,53 @@
 services:
+  revproxy:
+    image: nginx:latest
+    container_name: revproxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    environment:
+      - SERV_ADDR=${SUBDOMAIN}.duckdns.org
+    networks:
+      - rufina_java_postgres_network
+    depends_on:
+      certduck:
+        condition: service_completed_successfully
+      rufinachy_backend:
+        condition: service_started
+      rufinachy_python:
+        condition: service_started
+      rufinachy_node:
+        condition: service_started
+
+  certduck:
+    build: .
+    container_name: certbotdns
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    depends_on:
+      duckdns:
+        condition: service_completed_successfully
+    command: >
+      certonly --non-interactive --agree-tos --email rufina.chyhohidze@student.kdg.be
+      --preferred-challenges dns --authenticator dns-duckdns
+      --dns-duckdns-token "$TOKEN" -d "${SUBDOMAIN}.duckdns.org"
+
+  duckdns:
+    image: alpine/curl
+    container_name: duckdns
+    command: curl -v https://www.duckdns.org/update?domains=${SUBDOMAIN}\&token=${TOKEN}\&ip=${IPWEB}
+
+    environment:
+      - SUBDOMAIN=${SUBDOMAIN}
+      - TOKEN=${TOKEN}
+      - IPWEB=${IPWEB}
+
+    networks:
+      - rufina_java_postgres_network
+
   rufinachy_db:
     image: postgres:17.2-alpine
     restart: always
@@ -26,12 +75,16 @@ services:
     build: ./pythonApp
     ports:
       - "8081:5000"
+    networks:
+      - rufina_java_postgres_network
 
   rufinachy_node:
     container_name: nodeApp
     build: ./nodeApp
     ports:
       - "3000:3000"
+    networks:
+      - rufina_java_postgres_network
 
 networks:
   rufina_java_postgres_network:
@@ -39,7 +92,3 @@ networks:
 volumes:
   rufinachy_db_data:
     name: rufinachy_db_data
-
-    #
-
-

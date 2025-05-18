@@ -1,16 +1,31 @@
 const api = '/api/notes';
 
 async function loadNotes() {
-    const response = await fetch(api);
-    const notes = await response.json();
-    const list = document.getElementById('notesList');
-    list.innerHTML = '';
-    notes.forEach(note => {
-        const li = document.createElement('li');
-        li.textContent = note.content;
-        list.appendChild(li);
-    });
+    try {
+        const response = await fetch(api);
+        if (!response.ok) {
+            console.error(`Failed to fetch notes: ${response.status}`);
+            return;
+        }
+
+        const notes = await response.json();
+        const list = document.getElementById('notesList');
+        list.innerHTML = '';
+
+        if (Array.isArray(notes)) {
+            notes.forEach(note => {
+                const li = document.createElement('li');
+                li.textContent = note.content;
+                list.appendChild(li);
+            });
+        } else {
+            console.error("Invalid response format:", notes);
+        }
+    } catch (error) {
+        console.error("Error loading notes:", error);
+    }
 }
+
 
 document.getElementById('noteForm').addEventListener('submit', async function (e) {
     e.preventDefault();
