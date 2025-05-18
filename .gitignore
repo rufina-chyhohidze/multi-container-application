@@ -1,2 +1,5 @@
 /nodeApp/node_modules
 /.idea
+nginx/certbot/
+*.zip
+.env
