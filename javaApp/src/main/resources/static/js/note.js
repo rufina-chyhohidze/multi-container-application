@@ -14,7 +14,8 @@ async function loadNotes() {
 
 document.getElementById('noteForm').addEventListener('submit', async function (e) {
     e.preventDefault();
-    const content = document.getElementById('noteInput').value;
+    const content = document.getElementById('noteInput').value.trim();
+    if (!content) return;
     await fetch(api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
