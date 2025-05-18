@@ -8,6 +8,8 @@ services:
       POSTGRES_USER: rufina
       POSTGRES_PASSWORD: infra3
       POSTGRES_DB: springdb
+    volumes:
+      - rufinachy_db_data:/var/lib/postgresql/data
     networks:
       - rufina_java_postgres_network
 
@@ -33,4 +35,9 @@ services:
 
 networks:
   rufina_java_postgres_network:
+
+volumes:
+  rufinachy_db_data:
+    name: rufinachy_db_data
+
 
