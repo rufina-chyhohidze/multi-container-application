@@ -1,18 +1,14 @@
-# rufina-chyhohidze
-
-rufina-chyhohidze
+# Rufina-Chyhohidze ACS 202 Infrastructure3 project 
 
 ## Getting started
 
-do:
-1. docker compose up in the root directory
-2. search in browser to access javaApp: localhost:8080
-3. search in browser python app: localhost:8081/hello
-4. search in browser nodeApp: localhost:3000/greet
-
-
-To run locally, create a .env in root directory, `and` put this there:
-
+1. To start application, just unzip the project 
+2. run docker compose up
+3. access the following links:
+- https://rufina-infra3.duckdns.org → Java backend with database 
+-  https://rufina-infra3.duckdns.org/ml/hello -> python app
+- https://rufina-infra3.duckdns.org/node/greet -> node app
+  To run locally, create a .env in root directory (IF YOU DONT HAVE IT, NORMALLY YOU SHOULD HAVE IT), and put this there:
 
 ```env
 SUBDOMAIN=rufina-infra3
