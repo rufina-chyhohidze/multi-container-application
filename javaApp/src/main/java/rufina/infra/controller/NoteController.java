@@ -7,7 +7,7 @@ import rufina.infra.domain.Note;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/notes")
 public class NoteController {
     private final NoteRepository repo;
 
