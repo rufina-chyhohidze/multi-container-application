@@ -25,10 +25,10 @@ This project includes multiple components all running in containers:
   This is the main backend that serves notes through a simple API.
 
 - **Python Flask App (`pythonApp`)**  
-  Just a minimal microservice with a `/hello` route to test connectivity.
+  Just a minimal microservice with a `ml/hello` route to test connectivity.
 
 - **Node.js App (`nodeApp`)**  
-  A fun little Express.js server that responds with a custom message on `/greet`.
+  A fun little Express.js server that responds with a custom message on `node/greet`.
 
 - **PostgreSQL (`rufinachy_db`)**  
   A lightweight database container (Postgres 17 Alpine) used by the Java app.
